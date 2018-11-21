@@ -6,49 +6,137 @@
 	<link rel="stylesheet" type="text/css" href="./assets/app.css">
 </head>
 <body>
-	<div id="image-gallery"></div>
+	<header class="global-header" role="banner">
+	  <h1>Puppy image gallery</h1>
+
+	  <blockquote class="header-quote">
+	    <p>A dog will teach you unconditional love. If you can have that in your life, things won't be too bad.</p>
+
+	    <cite>&mdash;Robert Wagner</cite>
+	  </blockquote>
+	</header>
+	<!-- <div id="expanded-image"></div> -->
+	<aside id="image-gallery-filters">
+		<p>Filter By:</p>
+		<select id="">
+			
+		</select>
+	</aside>
+	<section class="body-content">
+		<div id="image-gallery"></div>
+	</section>
+
+	<footer class="global-footer">
+	  <p>Built by a wonderful developer for Asana.</p>
+	</footer>
 
 
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
-<!-- <script src="app.js"></script> -->
-<script src="./assets/data/dogs.js"></script>
-<script type="text/javascript">
-const DOGS_PER_PAGE = 12;
 
-createGallery( dogs );
 
-function expandImg( img ){
-	console.log( "working" );
-	console.log( img );
-}
 
-function createGallery( dogs ){
-	let galleryDiv = document.getElementById( 'image-gallery' );
 
-	dogs.map(function( dog, index ){
-		console.log( index );
-		let card = document.createElement( "div" ),
-			image = document.createElement( "img" ),
-			name_holder = document.createElement( "p" ),
-			name = document.createTextNode( dog.name ),
-			description = document.createTextNode( dog.description );
 
-		image.setAttribute( 'src', dog.image );
-		image.setAttribute( 'alt', dog.name + ' | located in San Francisco | ' + dog.description );
-		image.addEventListener( 'click', expandImg.bind( this ), true );
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	<script src="./assets/data/dogs.js"></script>
+	<script src="./assets/scripts/lazyload.min.js"></script>
 
-		card.classList.add( 'card' );
-		card.appendChild( image );
+	<script type="text/javascript">
+	const DOGS_PER_PAGE = 12;
 
-		name_holder.appendChild( name );
-		name_holder.classList.add( 'dog-name' );
+	createGallery( dogs );
 
-		card.appendChild( name_holder );
-		card.appendChild( description );
-		galleryDiv.appendChild( card );
-	})
-}
-</script>
+	popup = {
+	  init: function(){
+	    $('figure').click(function(){
+	      popup.open($(this));
+	    });
+	    
+	    $(document).on('click', '.popup img', function(){
+	      return false;
+	    }).on('click', '.popup', function(){
+	      popup.close();
+	    })
+	  },
+	  open: function($figure) {
+	    $('.gallery').addClass('pop');
+	    $popup = $('<div class="popup" />').appendTo($('body'));
+	    $fig = $figure.clone().appendTo($('.popup'));
+	    $bg = $('<div class="bg" />').appendTo($('.popup'));
+	    $close = $('<div class="close"><svg><use xlink:href="#close"></use></svg></div>').appendTo($fig);
+	    $shadow = $('<div class="shadow" />').appendTo($fig);
+	    src = $('img', $fig).attr('src');
+	    $shadow.css({backgroundImage: 'url(' + src + ')'});
+	    $bg.css({backgroundImage: 'url(' + src + ')'});
+	    setTimeout(function(){
+	      $('.popup').addClass('pop');
+	    }, 10);
+	  },
+	  close: function(){
+	    $('.gallery, .popup').removeClass('pop');
+	    setTimeout(function(){
+	      $('.popup').remove()
+	    }, 100);
+	  }
+	}
+
+	popup.init()
+
+	function expandImg( img ){
+		console.log( img.srcElement );
+		// document.getElementById('expanded-image').appendChild(img.srcElement);
+	}
+
+	// this function creates the image gallery for the dogs and lazy loads the images
+	function createGallery( dogs ){
+		let galleryDiv = document.getElementById( 'image-gallery' );
+
+		dogs.map(function( dog, index ){
+			let card = document.createElement( "figure" ),
+				image = document.createElement( "img" ),
+				image_wrapper = document.createElement( "div" ),
+				name = document.createTextNode( dog.name ),
+				name_holder = document.createElement( "p" ),
+				sex = document.createTextNode( dog.sex === 'female' ? ' (F)' : ' (M)' ),
+				read_more = document.createElement( "a" ),
+				info_wrapper = document.createElement( "figcaption" ),
+				description = document.createTextNode( dog.description );
+				
+
+			// add the image
+			image.setAttribute( 'data-src', dog.image );
+			image.setAttribute( 'alt', dog.name + ' | located in San Francisco | ' + dog.description );
+			image.addEventListener( 'click', expandImg.bind( this ), true );
+			image.classList.add( 'lazyload' );
+			image_wrapper.classList.add( 'image-wrapper' );
+			image_wrapper.appendChild( image );
+			card.appendChild( image_wrapper );
+
+			// add the name of the dog
+			name_holder.appendChild( name );
+			name_holder.appendChild( sex );
+			name_holder.classList.add( 'dog-name' );
+			info_wrapper.appendChild( name_holder );
+
+			// add the description of the dog
+			info_wrapper.appendChild( description );
+
+			// add the link to the dog page
+			read_more.innerHTML = "Read More";
+			read_more.classList.add( "button", "button-read-more" );
+			info_wrapper.appendChild( read_more );
+
+			card.appendChild( info_wrapper );
+			// add all the image cards to the gallery div
+			card.classList.add( 'card' );
+			galleryDiv.appendChild( card );
+		})
+	}
+
+	lazyload();
+
+
+
+	</script>
 </body>
 </html>
