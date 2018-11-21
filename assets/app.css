@@ -40,3 +40,31 @@ a {
   font-family: var(--font-serif);
   text-align: center;
 }
+
+
+/* custom styles */
+img {
+  max-height: 200px;
+}
+#image-gallery {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.card {
+  margin: 10px;
+  flex: 1 0 21%;
+  text-align: center;
+  border: 1px solid #ccc;
+  /*display: inline-flex;*/
+}
+.card img:hover {
+  cursor: pointer;
+}
+.dog-name {
+  text-transform: capitalize;
+}
+
+

@@ -1,1 +1,54 @@
 <!-- Put your final HTML here -->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pets Galore | A Dog Adoption Agency located in San Francisco, CA</title>
+	<link rel="stylesheet" type="text/css" href="./assets/app.css">
+</head>
+<body>
+	<div id="image-gallery"></div>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+<!-- <script src="app.js"></script> -->
+<script src="./assets/data/dogs.js"></script>
+<script type="text/javascript">
+const DOGS_PER_PAGE = 12;
+
+createGallery( dogs );
+
+function expandImg( img ){
+	console.log( "working" );
+	console.log( img );
+}
+
+function createGallery( dogs ){
+	let galleryDiv = document.getElementById( 'image-gallery' );
+
+	dogs.map(function( dog, index ){
+		console.log( index );
+		let card = document.createElement( "div" ),
+			image = document.createElement( "img" ),
+			name_holder = document.createElement( "p" ),
+			name = document.createTextNode( dog.name ),
+			description = document.createTextNode( dog.description );
+
+		image.setAttribute( 'src', dog.image );
+		image.setAttribute( 'alt', dog.name + ' | located in San Francisco | ' + dog.description );
+		image.addEventListener( 'click', expandImg.bind( this ), true );
+
+		card.classList.add( 'card' );
+		card.appendChild( image );
+
+		name_holder.appendChild( name );
+		name_holder.classList.add( 'dog-name' );
+
+		card.appendChild( name_holder );
+		card.appendChild( description );
+		galleryDiv.appendChild( card );
+	})
+}
+</script>
+</body>
+</html>
