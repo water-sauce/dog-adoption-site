@@ -7,18 +7,26 @@
 </head>
 <body>
 	<header class="global-header" role="banner">
-	  <h1>Puppy image gallery</h1>
+		<section>
+		  <h1>Puppy image gallery</h1>
 
-	  <blockquote class="header-quote">
-	    <p>A dog will teach you unconditional love. If you can have that in your life, things won't be too bad.</p>
+		  <blockquote class="header-quote">
+		    <p>A dog will teach you unconditional love. If you can have that in your life, things won't be too bad.</p>
 
-	    <cite>&mdash;Robert Wagner</cite>
-	  </blockquote>
+		    <cite>&mdash;Robert Wagner</cite>
+		  </blockquote>
+		</section>
+		<div class="header">
+			<a>Home</a>
+		</div>
 	</header>
-	<!-- <div id="expanded-image"></div> -->
+	<div id="expanded-image-wrapper" onClick="closeExpandedImg()">
+		<img src="" alt="" id="expanded-image" />
+		<button onClick="closeExpandedImg()">X</button>
+	</div>
 	<aside id="image-gallery-filters">
 		<p>Filter By:</p>
-		<select id="">
+		<select id="sex">
 			
 		</select>
 	</aside>
@@ -33,10 +41,6 @@
 
 
 
-
-
-
-
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 	<script src="./assets/data/dogs.js"></script>
 	<script src="./assets/scripts/lazyload.min.js"></script>
@@ -46,45 +50,20 @@
 
 	createGallery( dogs );
 
-	popup = {
-	  init: function(){
-	    $('figure').click(function(){
-	      popup.open($(this));
-	    });
-	    
-	    $(document).on('click', '.popup img', function(){
-	      return false;
-	    }).on('click', '.popup', function(){
-	      popup.close();
-	    })
-	  },
-	  open: function($figure) {
-	    $('.gallery').addClass('pop');
-	    $popup = $('<div class="popup" />').appendTo($('body'));
-	    $fig = $figure.clone().appendTo($('.popup'));
-	    $bg = $('<div class="bg" />').appendTo($('.popup'));
-	    $close = $('<div class="close"><svg><use xlink:href="#close"></use></svg></div>').appendTo($fig);
-	    $shadow = $('<div class="shadow" />').appendTo($fig);
-	    src = $('img', $fig).attr('src');
-	    $shadow.css({backgroundImage: 'url(' + src + ')'});
-	    $bg.css({backgroundImage: 'url(' + src + ')'});
-	    setTimeout(function(){
-	      $('.popup').addClass('pop');
-	    }, 10);
-	  },
-	  close: function(){
-	    $('.gallery, .popup').removeClass('pop');
-	    setTimeout(function(){
-	      $('.popup').remove()
-	    }, 100);
-	  }
-	}
-
-	popup.init()
-
 	function expandImg( img ){
-		console.log( img.srcElement );
-		// document.getElementById('expanded-image').appendChild(img.srcElement);
+		let expanded_img = document.getElementById( 'expanded-image' ),
+			expanded_img_wrapper = document.getElementById( 'expanded-image-wrapper' );
+			expanded_img.src = img.srcElement.src;
+			expanded_img.setAttribute( 'alt', img.srcElement.alt + ' (expanded image)' );
+			expanded_img_wrapper.classList.add( 'expand' );
+			// $('body').bind('touchmove', function(e){e.preventDefault()})
+			document.getElementsByTagName("body")[0].setAttribute( 'style', 'overflow:hidden' );
+	}
+	
+	function closeExpandedImg(){
+		let expanded_img_wrapper = document.getElementById( 'expanded-image-wrapper' );
+			expanded_img_wrapper.classList.remove( 'expand' );
+			document.getElementsByTagName("body")[0].setAttribute( 'style', '' );
 	}
 
 	// this function creates the image gallery for the dogs and lazy loads the images
@@ -92,21 +71,21 @@
 		let galleryDiv = document.getElementById( 'image-gallery' );
 
 		dogs.map(function( dog, index ){
+
 			let card = document.createElement( "figure" ),
 				image = document.createElement( "img" ),
 				image_wrapper = document.createElement( "div" ),
 				name = document.createTextNode( dog.name ),
 				name_holder = document.createElement( "p" ),
-				sex = document.createTextNode( dog.sex === 'female' ? ' (F)' : ' (M)' ),
+				sex = document.createTextNode( ' (' + String(dog.sex).substr(0,1).toUpperCase() + ')' ),
 				read_more = document.createElement( "a" ),
 				info_wrapper = document.createElement( "figcaption" ),
 				description = document.createTextNode( dog.description );
-				
 
 			// add the image
 			image.setAttribute( 'data-src', dog.image );
 			image.setAttribute( 'alt', dog.name + ' | located in San Francisco | ' + dog.description );
-			image.addEventListener( 'click', expandImg.bind( this ), true );
+			image.addEventListener( 'click', expandImg.bind( this ) );
 			image.classList.add( 'lazyload' );
 			image_wrapper.classList.add( 'image-wrapper' );
 			image_wrapper.appendChild( image );
