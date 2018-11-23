@@ -1,6 +1,6 @@
 /* Globals */
 :root {
-  --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-sans: "Roboto", Helvetica, Arial, sans-serif;
   --font-serif: Georgia, serif;
   --color-secondary: #333;
   --color-link: #635ac7;
@@ -13,6 +13,7 @@
 
 body {
   margin: 0;
+  font-family: var(--font-sans);
 }
 
 a {
@@ -21,8 +22,8 @@ a {
 
 /* Global Header */
 .global-header {
-  padding-bottom: 2rem;
-  padding-top: 2rem;
+/*  padding-bottom: 2rem;
+  padding-top: 2rem;*/
   text-align: center;
 }
 
@@ -44,11 +45,32 @@ a {
 
 
 /* custom styles */
+.capitalize {
+  text-transform: capitalize;
+}
 .header {
   text-align: left;
-  height: 150px;
+  height: 100px;
   width: 100%;
   background-color: #5F1D94;
+  color: #FFFFFF;
+}
+.header a {
+  color: #FFFFFF;
+}
+.header a.home {
+  font-size: 24px;
+  margin: 0.5rem 1rem;
+}
+.header .right-link{
+  float: right;
+}
+
+.main-body {
+  background: #F8F8F8;
+  padding: 1rem;
+  max-width: 1375px;
+  margin: 0 auto;
 }
 aside {
   display: inline-block;
@@ -56,7 +78,7 @@ aside {
   height: 100vh;
   background: #ccc;
 }
-section.body-content {
+div.body-content {
   display: inline-block;
   width: 79%;
 }
@@ -86,6 +108,7 @@ img {
   height: 225px;
   max-height: 275px;
   width: 100%;
+  background: #EFEFEF;
 }
 #image-gallery {
   display: flex;
@@ -107,12 +130,19 @@ img {
   padding: 10px;
   text-align: left;
 }
+.card figcaption p {
+  margin: 0;
+}
 .card img:hover {
   cursor: pointer;
 }
 .dog-name {
   text-align: left;
   text-transform: capitalize;
+  font-size: 20px;
+  color: #5F1D94;
+  font-weight: 400;
+  margin: 0.25rem 0;
 }
 .button {
   display: block;
