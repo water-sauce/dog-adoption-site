@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Pets Galore | A Dog Adoption Agency located in San Francisco, CA</title>
+	<title>DogSF | A Dog Adoption Agency located in San Francisco, CA</title>
 	
 	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="./assets/app.css">
@@ -18,7 +18,7 @@
 
 <!-- navbar -->
 <nav class="navbar" role="navigation" aria-label="Site menu">
-	<div class="container">
+	<div class="container clearfix">
 		<div class="links links-left">
 			<a href="#">Our Dogs</a>
 			<a href="#">Resources</a>
@@ -46,19 +46,30 @@
 		<!-- filter side bar -->
 		<aside id="image-gallery-filters">
 			<p>Filter By:</p>
-			<!-- <select id="filterby-gender">
-				
-			</select> -->
+			<ul id="filter-list">
+				<!-- <li>
+					<h4>Breed</h4>
+					<a>
+					<div class="filter-checklist" id="">
+
+					</div>
+				</li>
+				<li>Age</li>
+				<li>Gender</li> -->
+			</ul>
 		</aside>
 
 		<!-- main body -->
 		<div class="body-content">
 			<div class="banner">
-				<div class="banner-content">
+				<div class="banner-image-content">
 					<h2>Find the dog of your dreams at our adoption agency located in San Francisco.</h2>
-					<p>Adopt a dog and become a family. Check out the dogs we currently have below.</p>
+					<p>Grow your family — check out the dogs we currently have below.</p>
 				</div>
-				<img src="./assets/images/custom/banner.jpg" />
+				<img src="./assets/images/custom/banner.jpg" alt="banner promoting the adoption of dogs at DogSF" />
+				<div class="filter-and-info">
+					<p id="dog-count"><span id="total-dogs-showing"></span> Dogs</p>
+				</div>
 			</div>
 			<div id="image-gallery"></div>
 		</div>
@@ -97,7 +108,11 @@ function expandImg( img ){
 
 // close the image
 function closeExpandedImg(){
-	let expanded_img_wrapper = document.getElementById( 'expanded-image-wrapper' );
+	let expanded_img_wrapper = document.getElementById( 'expanded-image-wrapper' ),
+		// remove the dog image from the div
+		expanded_img = document.getElementById( 'expanded-image' );
+		expanded_img.src = '';
+		expanded_img.setAttribute( 'alt', '' );
 		expanded_img_wrapper.classList.remove( 'expand' );
 		// enable page scroll after close
 		document.getElementsByTagName("body")[0].setAttribute( 'style', '' );
@@ -105,14 +120,13 @@ function closeExpandedImg(){
 
 // this function creates the image gallery for the dogs and lazy loads the images
 function createGallery( dogs ){
-	console.log( dogs );
 
-	let galleryDiv = document.getElementById( 'image-gallery' );
-
+	let gallery_div = document.getElementById( 'image-gallery' ),
+		total_dogs = document.getElementById( 'total-dogs-showing' );
+	total_dogs.innerHTML = dogs.length;
 
 	dogs.map( function( dog, index ){
 		// mapping over the array and creating HTML elements through the loop
-
 
 		let card = document.createElement( "figure" ),
 			image = document.createElement( "img" ),
@@ -125,7 +139,7 @@ function createGallery( dogs ){
 			breed_wrapper = document.createElement( "p" ),
 			info_h5 = document.createElement( "h5" ),
 			age = document.createTextNode( dog.age ),
-			gender = document.createTextNode( ' ' + dog.gender ),
+			gender = document.createTextNode( ' ' + dog.sex ),
 			read_more = document.createElement( "a" ),
 			info_wrapper = document.createElement( "figcaption" ),
 			description_wrapper = document.createElement( "p" ),
@@ -141,7 +155,7 @@ function createGallery( dogs ){
 		image_expander.setAttribute( 'data-pull', dog.image );
 		image_expander.setAttribute( 'alt', 'Expand image');
 		image_expander.classList.add( 'image-expander');
-
+		// add the image expand button and have the event listener on it
 		image_expander.addEventListener( 'click', expandImg.bind( this ) );
 		image_wrapper.appendChild( image );
 		image_wrapper.appendChild( image_expander );
@@ -170,14 +184,14 @@ function createGallery( dogs ){
 		info_wrapper.appendChild( description_wrapper );
 
 		// add the link to the dog page
-		read_more.innerHTML = "Read More";
+		read_more.innerHTML = "Learn More";
 		read_more.classList.add( "button", "button-read-more" );
 		info_wrapper.appendChild( read_more );
 
 		// add all the image cards to the gallery div
 		card.appendChild( info_wrapper );
 		card.classList.add( 'card' );
-		galleryDiv.appendChild( card );
+		gallery_div.appendChild( card );
 
 	})
 
