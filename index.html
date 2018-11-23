@@ -4,168 +4,188 @@
 <head>
 	<title>Pets Galore | A Dog Adoption Agency located in San Francisco, CA</title>
 	
-	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="./assets/app.css">
 </head>
 <body>
-	<!-- header -->
-	<header class="global-header" role="banner">
+<!-- header -->
+<header class="global-header" role="banner">
+	<blockquote class="header-quote container">
+		<p>&ldquo;A dog will teach you unconditional love. If you can have that in your life, things won't be too bad.&rdquo;</p>
+		<cite>&mdash;Robert Wagner</cite>
+	</blockquote>
+</header>
 
-		<h1>Puppy image gallery</h1>
-
-		<blockquote class="header-quote">
-			<p>A dog will teach you unconditional love. If you can have that in your life, things won't be too bad.</p>
-			<cite>&mdash;Robert Wagner</cite>
-		</blockquote>
-	</header>
-
-	<!-- navbar -->
-	<nav class="header">
-		<a href="#">Dogs Gallery</a>
-		<a href="#">Resources</a>
-		<a href="#">About Us</a>
-		<a href="#">Contact Us</a>
-		<a href="#">Sign Up</a>
-		<a href="#">Log In</a>
-	</nav>
-	
-	<!--  -->
-	<div id="expanded-image-wrapper" onClick="closeExpandedImg()">
-		<img src="" alt="" id="expanded-image" />
-		<button onClick="closeExpandedImg()">X</button>
+<!-- navbar -->
+<nav class="navbar" role="navigation" aria-label="Site menu">
+	<div class="container">
+		<div class="links links-left">
+			<a href="#">Our Dogs</a>
+			<a href="#">Resources</a>
+			<a href="#">About Us</a>
+			<a href="#">Contact Us</a>
+		</div>
+		<div class="links links-center">
+			<a href="#" id="logo-link">DogSF</a>
+		</div>
+		<div class="links links-right">
+			<a href="#">Log In</a>
+			<a href="#">Register</a>
+		</div>
 	</div>
+</nav>
 
-	<section class="main-body">
+<!--  -->
+<div id="expanded-image-wrapper" onClick="closeExpandedImg()">
+	<img src="" alt="" id="expanded-image" />
+	<img src="./assets/images/custom/close-btn.png" alt="close enlarged image" onClick="closeExpandedImg()" id="close-expanded-image-button" />
+</div>
 
-		<h2>Find the dog of your dreams at our adoption agency located in San Francisco.</h2>
-		<p>Adopt a dog and become a family. Check out the dogs we currently have below.</p>
-
+<section class="main-body" role="main">
+	<div class="container">
 		<!-- filter side bar -->
 		<aside id="image-gallery-filters">
 			<p>Filter By:</p>
-			<select id="filterby-sex">
+			<!-- <select id="filterby-gender">
 				
-			</select>
+			</select> -->
 		</aside>
 
 		<!-- main body -->
 		<div class="body-content">
+			<div class="banner">
+				<div class="banner-content">
+					<h2>Find the dog of your dreams at our adoption agency located in San Francisco.</h2>
+					<p>Adopt a dog and become a family. Check out the dogs we currently have below.</p>
+				</div>
+				<img src="./assets/images/custom/banner.jpg" />
+			</div>
 			<div id="image-gallery"></div>
 		</div>
-	</section>
+	</div>
+</section>
 
-	<!-- footer -->
-	<footer class="global-footer">
-	  <p>Built by a wonderful developer for Asana.</p>
-	</footer>
-
-
-
-
-	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-	<script src="./assets/data/dogs.js"></script>
-	<script src="./assets/scripts/lazyload.min.js"></script>
-
-	<script type="text/javascript">
-	// if adding pagination and limiting the # of dogs
-	const DOGS_PER_PAGE = 12;
-
-	// call the function to load the dogs from the dogs.js file
-	createGallery( dogs );
-
-	// expand the image
-	function expandImg( img ){
-		// attach image to the overlay
-		let expanded_img = document.getElementById( 'expanded-image' ),
-			expanded_img_wrapper = document.getElementById( 'expanded-image-wrapper' );
-			expanded_img.src = img.srcElement.src;
-			expanded_img.setAttribute( 'alt', img.srcElement.alt + ' (expanded image)' );
-			expanded_img_wrapper.classList.add( 'expand' );
-			// prevent scroll when open
-			document.getElementsByTagName("body")[0].setAttribute( 'style', 'overflow:hidden' );
-	}
-	
-	// close the image
-	function closeExpandedImg(){
-		let expanded_img_wrapper = document.getElementById( 'expanded-image-wrapper' );
-			expanded_img_wrapper.classList.remove( 'expand' );
-			// enable page scroll after close
-			document.getElementsByTagName("body")[0].setAttribute( 'style', '' );
-	}
-
-	// this function creates the image gallery for the dogs and lazy loads the images
-	function createGallery( dogs ){
-		// console.log( dogs );
-
-		let galleryDiv = document.getElementById( 'image-gallery' );
-
-		dogs.map( function( dog, index ){
-			// mapping over the array and creating HTML elements through the loop
-			let card = document.createElement( "figure" ),
-				image = document.createElement( "img" ),
-				image_wrapper = document.createElement( "div" ),
-				name = document.createTextNode( dog.name ),
-				name_holder = document.createElement( "h4" ),
-				breed = dog.breed.toString(),
-				breed_wrapper = document.createElement( "p" ),
-				age = document.createTextNode( dog.age ),
-				age_wrapper = document.createElement( "p" ),
-				// sex = document.createTextNode( ' (' + String( dog.sex ).substr(0,1).toUpperCase() + ')' ),
-				sex = document.createTextNode( ' ' + dog.sex ),
-				read_more = document.createElement( "a" ),
-				info_wrapper = document.createElement( "figcaption" ),
-				description = document.createTextNode( dog.description );
-
-			// add the image
-			image.setAttribute( 'data-src', dog.image );
-			image.setAttribute( 'alt', dog.name + ' | located in San Francisco | ' + dog.description );
-			image.addEventListener( 'click', expandImg.bind( this ) );
-			image.classList.add( 'lazyload' );
-			image_wrapper.classList.add( 'image-wrapper' );
-			image_wrapper.appendChild( image );
-			card.appendChild( image_wrapper );
-
-			// add the name of the dog
-			name_holder.appendChild( name );
-			// name_holder.appendChild( sex );
-			name_holder.classList.add( 'dog-name' );
-			info_wrapper.appendChild( name_holder );
-
-			// add the dog breed
-			breed = breed.split(",").join(", ");
-			breed_wrapper.innerHTML = 'Breed: ' + breed;
-			breed_wrapper.classList.add( 'capitalize' );
-			info_wrapper.appendChild( breed_wrapper );
-
-			// add the age and sex of the dog
-			age_wrapper.appendChild( age );
-			age_wrapper.appendChild( sex );
-			age_wrapper.classList.add( 'capitalize' );
-			info_wrapper.appendChild( age_wrapper );
-
-			// add the description of the dog
-			info_wrapper.appendChild( description );
-
-			// add the link to the dog page
-			read_more.innerHTML = "Read More";
-			read_more.classList.add( "button", "button-read-more" );
-			info_wrapper.appendChild( read_more );
-
-			// add all the image cards to the gallery div
-			card.appendChild( info_wrapper );
-			card.classList.add( 'card' );
-			galleryDiv.appendChild( card );
+<!-- footer -->
+<footer class="global-footer">
+  <p>Built by a wonderful developer for Asana.</p>
+</footer>
 
 
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="./assets/data/dogs.js"></script>
+<script src="./assets/scripts/lazyload.min.js"></script>
 
-		})
+<script type="text/javascript">
+// if adding pagination and limiting the # of dogs
+const DOGS_PER_PAGE = 12;
+
+// call the function to load the dogs from the dogs.js file
+createGallery( dogs );
+
+// expand the image
+function expandImg( img ){
+	// attach image to the overlay
+	let expanded_img = document.getElementById( 'expanded-image' ),
+		expanded_img_wrapper = document.getElementById( 'expanded-image-wrapper' );
+		console.log( img.srcElement );
+		expanded_img.src = img.srcElement.getAttribute( 'data-pull' );
+		expanded_img.setAttribute( 'alt', img.srcElement.alt + ' (expanded image)' );
+		expanded_img_wrapper.classList.add( 'expand' );
+		// prevent scroll when open
+		document.getElementsByTagName("body")[0].setAttribute( 'style', 'overflow:hidden' );
+}
+
+// close the image
+function closeExpandedImg(){
+	let expanded_img_wrapper = document.getElementById( 'expanded-image-wrapper' );
+		expanded_img_wrapper.classList.remove( 'expand' );
+		// enable page scroll after close
+		document.getElementsByTagName("body")[0].setAttribute( 'style', '' );
+}
+
+// this function creates the image gallery for the dogs and lazy loads the images
+function createGallery( dogs ){
+	console.log( dogs );
+
+	let galleryDiv = document.getElementById( 'image-gallery' );
 
 
-	}
+	dogs.map( function( dog, index ){
+		// mapping over the array and creating HTML elements through the loop
 
-	// call lazyload on the images to increase page load speed
-	lazyload();
 
-	</script>
+		let card = document.createElement( "figure" ),
+			image = document.createElement( "img" ),
+			image_wrapper = document.createElement( "div" ),
+			image_expander = document.createElement( "img" ),
+
+			name = document.createTextNode( dog.name ),
+			name_holder = document.createElement( "h4" ),				
+			breed = dog.breed.toString(),
+			breed_wrapper = document.createElement( "p" ),
+			info_h5 = document.createElement( "h5" ),
+			age = document.createTextNode( dog.age ),
+			gender = document.createTextNode( ' ' + dog.gender ),
+			read_more = document.createElement( "a" ),
+			info_wrapper = document.createElement( "figcaption" ),
+			description_wrapper = document.createElement( "p" ),
+			description = document.createTextNode( dog.description );
+			// gender = document.createTextNode( ' (' + String( dog.gender ).substr(0,1).toUpperCase() + ')' ),
+			
+		// add the image
+		image.setAttribute( 'data-src', dog.image );
+		image.setAttribute( 'alt', dog.name + ' | located in San Francisco | ' + dog.description );
+		image.classList.add( 'lazyload' );
+		image_wrapper.classList.add( 'image-wrapper' );
+		image_expander.setAttribute( 'src', './assets/images/custom/expand-btn.png' );
+		image_expander.setAttribute( 'data-pull', dog.image );
+		image_expander.setAttribute( 'alt', 'Expand image');
+		image_expander.classList.add( 'image-expander');
+
+		image_expander.addEventListener( 'click', expandImg.bind( this ) );
+		image_wrapper.appendChild( image );
+		image_wrapper.appendChild( image_expander );
+		card.appendChild( image_wrapper );
+
+		// add the name of the dog
+		name_holder.appendChild( name );
+		name_holder.classList.add( 'dog-name' );
+		info_wrapper.appendChild( name_holder );
+
+		// add the age and gender of the dog
+		info_h5.appendChild( age );
+		info_h5.appendChild( gender );
+		info_h5.classList.add( 'capitalize' );
+		info_wrapper.appendChild( info_h5 );
+
+		// add the dog breed
+		breed = breed.split(",").join(", ");
+		breed_wrapper.innerHTML = breed;
+		breed_wrapper.classList.add( 'capitalize' );
+		info_h5.appendChild( breed_wrapper );
+
+		// add the description of the dog
+		description_wrapper.appendChild( description );
+		description_wrapper.classList.add( 'description' );
+		info_wrapper.appendChild( description_wrapper );
+
+		// add the link to the dog page
+		read_more.innerHTML = "Read More";
+		read_more.classList.add( "button", "button-read-more" );
+		info_wrapper.appendChild( read_more );
+
+		// add all the image cards to the gallery div
+		card.appendChild( info_wrapper );
+		card.classList.add( 'card' );
+		galleryDiv.appendChild( card );
+
+	})
+
+}
+
+// call lazyload on the images to increase page load speed
+lazyload();
+
+</script>
 </body>
 </html>
