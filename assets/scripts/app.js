@@ -29,8 +29,12 @@ function closeExpandedImg(){
 function createFilters( dog_arr, arr_name ){
 	let gallery_filter = document.getElementById( 'image-gallery-filters' ),
 		filter_list = document.getElementById( 'filter-list' ),
-		filter_name = document.createElement( 'h4' );
+		filter_category = document.createElement( 'li' ),
+		filter_name = document.createElement( 'h4' ),
+		filter_expand = document.createElement( 'a' ),
+		filter_ul = document.createElement( 'ul' );
 
+	// flatten array and reduce to get the name and number of groupings
 	dog_arr = dog_arr.flat().reduce(function(dog, type){
 		if ( !dog[type] ){
 			dog[type] = 0;
@@ -39,35 +43,34 @@ function createFilters( dog_arr, arr_name ){
 		return dog;
 	}, {});
 
-	// console.log( arr_name );
-	console.log( dog_arr );
+	// filter_expand.innerHTML = '+';
+	// filter_expand.addEventListener( 'click', function(e){
+
+	// });
+
+	filter_name.innerHTML = arr_name;
+	filter_category.classList.add( 'category-list' );
+	filter_category.appendChild( filter_name );
+	filter_category.appendChild( filter_expand );
+	filter_category.appendChild( filter_ul );
 
 	Object.keys( dog_arr ).forEach( function( key ) {
 		let checkbox = document.createElement( 'input' ),
-			name = document.createElement( 'p' );
+			name = document.createElement( 'span' ),
+			checkbox_ul = document.createElement( 'ul' ),
+			checkbox_li = document.createElement( 'li' );
 
 		checkbox.setAttribute( 'type', 'checkbox' );
 		checkbox.setAttribute( 'data-set', key );
-	    // console.log( key, dog_arr[ key ] );
-	    filter_list.appendChild( checkbox );
+		name.innerHTML = key + ' (' + dog_arr[ key ] + ')';
+
+		checkbox_li.appendChild( checkbox );
+		checkbox_li.appendChild( name );
+	    filter_ul.appendChild( checkbox_li );
 	});
 
-	filter_name.innerHTML = arr_name;
-	filter_list.appendChild( filter_name );
+	filter_list.appendChild( filter_category );
 
-	// <li>
-	// 	<h4>Example</h4>
-	// 	<a>+</a>
-	// 	<div class="filter-checkbox" id="">
-	// 		<input type="checkbox" name="chihuahua" />
-	// 		<p>Chihuahua <span></span></p>
-	// 	</div>
-	// </li>
-	// for ( var i = 0; i < breed_arr.length; i++ ){
-
-	// }
-
-    // console.log(breed_arr);
 }
 
 // this function creates the image gallery for the dogs and lazy loads the images
@@ -94,7 +97,7 @@ function createGallery( dogs ){
 			name = document.createTextNode( dog.name ),
 			name_holder = document.createElement( "h4" ),
 			breed = dog.breed.toString(),
-			breed_wrapper = document.createElement( "p" ),
+			breed_wrapper = document.createElement( "span" ),
 			info_h5 = document.createElement( "h5" ),
 			age = document.createTextNode( dog.age ),
 			gender = document.createTextNode( ' ' + dog.sex ),
@@ -132,7 +135,6 @@ function createGallery( dogs ){
 		// add the dog breed
 		breed = breed.split(",").join(", ");
 		breed_wrapper.innerHTML = breed;
-		breed_wrapper.classList.add( 'capitalize' );
 		info_h5.appendChild( breed_wrapper );
 
 		// add the description of the dog
