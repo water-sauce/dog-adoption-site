@@ -1,14 +1,12 @@
 <!-- Put your final HTML here -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="theme-color" content="#333333">
 	<title>DogSF | A Dog Adoption Agency located in San Francisco, CA</title>
-
 	<!-- meta title, meta description, social tags -->
-	
 	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="./assets/app.css">
 </head>
@@ -25,7 +23,7 @@
 <nav class="navbar" role="navigation" aria-label="Site menu">
 
 	<!-- mobile nav -->
-	<div id="mobile-menu" role="mobile navigation" aria-label="mobile site menu">
+	<div id="mobile-menu" aria-label="mobile site menu">
 		<img src="./assets/images/custom/close-btn.png" alt="close mobile menu" onClick="closeMobileMenu()" id="mobile-menu-close-btn" />
 		<ul id="mobile-nav-list">
 			<li><a href="#">Home</a></li>
@@ -38,7 +36,7 @@
 		</ul>
 	</div>
 	<div class="mobile-toggle" aria-label="mobile navbar">
-		<img src="./assets/images/custom/mobile-btn.png" alt="mobile toggle" onClick="openMobileMenu()" id="" />
+		<img src="./assets/images/custom/mobile-btn.png" alt="mobile toggle" onClick="openMobileMenu()" />
 	</div>
 
 	<!-- web nav -->
@@ -98,15 +96,15 @@
 </footer>
 
 <!-- adding in jQuery -->
-<!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script> -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
 <!-- adding in lazyload js script -->
 <script src="./assets/scripts/lazyload.min.js"></script>
 <script src="./assets/data/dogs.js"></script>
 <script src="./assets/scripts/app.js"></script>
-<script type="text/javascript">
+<script>
 // call the function to load the dogs from the dogs.js file
 createGallery( dogs );
-
 // call lazyload on the images to increase page load speed
 lazyload();
 </script>

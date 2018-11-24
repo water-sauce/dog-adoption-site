@@ -1,6 +1,16 @@
 // if adding pagination and limiting the # of dogs
 // const DOGS_PER_PAGE = 12;
 
+// fall back for Safari and IE 
+Object.defineProperty(Array.prototype, 'flat', {
+    value: function(depth = 1) {
+      return this.reduce(function (flat, toFlatten) {
+        return flat.concat((Array.isArray(toFlatten) && (depth-1)) ? toFlatten.flat(depth-1) : toFlatten);
+      }, []);
+    }
+});
+
+
 // expand the image
 function expandImg( img ){
 	// attach image to the overlay
@@ -59,13 +69,14 @@ function createFilters( dog_arr, arr_name ){
 
 	Object.keys( dog_arr ).forEach( function( key ) {
 		let checkbox = document.createElement( "input" ),
-			name = document.createElement( "span" ),
+			name = document.createElement( "label" ),
 			checkbox_ul = document.createElement( "ul" ),
 			checkbox_li = document.createElement( "li" );
 
 		checkbox.setAttribute( "type", "checkbox" );
 		checkbox.setAttribute( "data-set", key );
 		name.innerHTML = key + " (" + dog_arr[ key ] + ")";
+		name.setAttribute( "for", key );
 
 		checkbox_li.appendChild( checkbox );
 		checkbox_li.appendChild( name );
