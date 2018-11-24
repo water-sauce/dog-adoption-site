@@ -8,8 +8,6 @@
   --color-text: #212121;
   --color-secondary-text: rgba(0,0,0,.75);
   --color-white: #FFFFFF;
-
-  --mq-ipad: 768px;
   font-family: var(--font-sans);
   font-weight: normal;
   line-height: 1.5;
@@ -24,6 +22,10 @@ body {
 
 a {
   color: var(--color-link);
+}
+
+p {
+  font-size: 15px;
 }
 
 /* Global Header */
@@ -306,7 +308,6 @@ div.banner img {
   text-align: right;
 }
 .filter-and-info #dog-count {
-  margin-right: 1rem;
   font-size: 14px;
   color: var(--color-secondary-text);
 }
@@ -419,7 +420,6 @@ div.banner img {
 }
 .card figcaption p {
   margin: 0;
-  font-size: 15px;
 }
 .card figcaption p.description {
   margin: 0.5rem 0;
@@ -442,6 +442,19 @@ div.banner img {
   .navbar .links-right {
     display: none;
   }
+  .mobile-toggle {
+    display: block;
+    position: absolute;
+    top: 30px;
+    right: 20px;
+  }
+  #mobile-menu.open {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+  }
 }
 
 @media only screen and (max-width: 768px ){
@@ -453,20 +466,6 @@ div.banner img {
   div.body-content {
     display: block;
     width: 100%;
-  }
-  .mobile-toggle {
-    display: block;
-    position: absolute;
-    top: 30px;
-    right: 20px;
-  }
-  #mobile-menu.open {
-    /*display: block;*/
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
   }
   .card {
     margin: 0 0 1rem;
