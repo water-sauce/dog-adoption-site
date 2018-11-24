@@ -43,10 +43,12 @@ function createFilters( dog_arr, arr_name ){
 		return dog;
 	}, {});
 
-	// filter_expand.innerHTML = '+';
-	// filter_expand.addEventListener( 'click', function(e){
-
-	// });
+	filter_expand.innerHTML = '+';
+	filter_expand.classList.add( 'expander' );
+	filter_expand.addEventListener( 'click', function( e ){
+		this.classList.toggle( 'expanded' );
+		this.parentNode.classList.toggle( 'expand' );
+	});
 
 	filter_name.innerHTML = arr_name;
 	filter_category.classList.add( 'category-list' );
@@ -153,9 +155,19 @@ function createGallery( dogs ){
 		gallery_div.appendChild( card );
 	})
 
-
 	createFilters( breed_arr, 'Breed' );
 	createFilters( gender_arr, 'Gender' );
 	createFilters( age_arr, 'Age' );
-
 }
+
+function openMobileMenu(){
+	let mobile_menu = document.getElementById( 'mobile-menu' );
+	mobile_menu.classList.add( 'open' );
+}
+
+function closeMobileMenu(){
+	let mobile_menu = document.getElementById( 'mobile-menu' );
+	mobile_menu.classList.remove( 'open' );
+}
+
+

@@ -18,7 +18,22 @@
 
 <!-- navbar -->
 <nav class="navbar" role="navigation" aria-label="Site menu">
-	<div class="container clearfix">
+	<div id="mobile-menu" role="mobile navigation" aria-label="mobile site menu">
+		<img src="./assets/images/custom/close-btn.png" alt="close mobile menu" onClick="closeMobileMenu()" id="mobile-menu-close-btn" />
+		<ul id="mobile-nav-list">
+			<li><a href="#">Home</a></li>
+			<li><a href="#">Our Dogs</a></li>
+			<li><a href="#">Resources</a></li>
+			<li><a href="#">About Us</a></li>
+			<li><a href="#">Contact Us</a></li>
+			<li><a href="#">Log In</a></li>
+			<li><a href="#">Register</a></li>
+		</ul>
+	</div>
+	<div class="mobile-toggle" aria-label="mobile navbar">
+		<img src="./assets/images/custom/mobile-btn.png" alt="mobile toggle" onClick="openMobileMenu()" id="" />
+	</div>
+	<div class="container clearfix" id="main-menu">
 		<div class="links links-left">
 			<a href="#">Our Dogs</a>
 			<a href="#">Resources</a>
@@ -48,6 +63,7 @@
 		<aside id="image-gallery-filters">
 			<p>Filter By:</p>
 			<ul id="filter-list"></ul>
+			<button class="button button-primary">Filter</button>
 		</aside>
 		<!-- main body content -->
 		<div class="body-content">
